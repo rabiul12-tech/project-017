@@ -1,0 +1,1980 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gaggle.fun - Social Gaming Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      :root {
+        --bg-dark: #0a0e17;
+        --bg-light: #0f1420;
+        --primary-blue: #4f46e5;
+        --primary-blue-light: #6366f1;
+        --secondary-blue: #818cf8;
+        --accent-purple: #a855f7;
+        --accent-pink: #ec4899;
+        --text-white: #f8fafc;
+        --text-light: #e2e8f0;
+        --text-gray: #94a3b8;
+        --text-muted: #64748b;
+        --card-bg: rgba(30, 41, 59, 0.7);
+        --card-bg-light: rgba(51, 65, 85, 0.5);
+        --card-border: rgba(148, 163, 184, 0.1);
+        --gradient-primary: linear-gradient(
+          135deg,
+          var(--primary-blue),
+          var(--accent-purple)
+        );
+        --gradient-secondary: linear-gradient(
+          135deg,
+          var(--accent-purple),
+          var(--accent-pink)
+        );
+        --gradient-dark: linear-gradient(
+          135deg,
+          var(--bg-dark),
+          var(--bg-light)
+        );
+        --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+        --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.2);
+        --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.3);
+        --shadow-primary: 0 8px 24px rgba(79, 70, 229, 0.3);
+        --radius-sm: 8px;
+        --radius-md: 14px;
+        --radius-lg: 20px;
+        --transition-fast: 0.2s ease;
+        --transition-normal: 0.3s ease;
+        --transition-slow: 0.5s ease;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background: var(--gradient-dark);
+        color: var(--text-white);
+        line-height: 1.6;
+        overflow-x: hidden;
+        font-weight: 400;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-weight: 700;
+        line-height: 1.2;
+      }
+
+      h1 {
+        font-size: 3.5rem;
+        letter-spacing: -0.025em;
+      }
+
+      h2 {
+        font-size: 2.5rem;
+        letter-spacing: -0.025em;
+      }
+
+      h3 {
+        font-size: 1.5rem;
+      }
+
+      p {
+        font-size: 1.125rem;
+        color: var(--text-gray);
+      }
+
+      /* Particle/Confetti Background */
+      #particles-js {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+      }
+
+      /* Header Styles */
+      header {
+        position: sticky;
+        top: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 5%;
+        background: rgba(10, 14, 23, 0.95);
+        backdrop-filter: blur(10px);
+        z-index: 100;
+        transition: all var(--transition-normal);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      header.scrolled {
+        box-shadow: var(--shadow-md);
+        padding: 0.75rem 5%;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        font-weight: 800;
+        font-size: 1.75rem;
+        color: var(--text-white);
+        letter-spacing: -0.025em;
+      }
+
+      .logo i {
+        margin-right: 0.5rem;
+        color: var(--primary-blue);
+        font-size: 1.5rem;
+      }
+
+      nav ul {
+        display: flex;
+        list-style: none;
+        gap: 2rem;
+      }
+
+      nav ul li {
+        position: relative;
+      }
+
+      nav ul li a {
+        color: var(--text-light);
+        text-decoration: none;
+        font-weight: 500;
+        transition: color var(--transition-fast);
+        font-size: 1rem;
+        position: relative;
+      }
+
+      nav ul li a:hover {
+        color: var(--text-white);
+      }
+
+      nav ul li a::after {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--gradient-primary);
+        transition: width var(--transition-normal);
+      }
+
+      nav ul li a:hover::after {
+        width: 100%;
+      }
+
+      .dropdown {
+        position: relative;
+      }
+
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        background: var(--card-bg);
+        backdrop-filter: blur(20px);
+        min-width: 200px;
+        box-shadow: var(--shadow-lg);
+        border-radius: var(--radius-md);
+        overflow: hidden;
+        z-index: 1;
+        top: 100%;
+        left: 0;
+        margin-top: 0.75rem;
+        border: 1px solid var(--card-border);
+        animation: fadeIn 0.3s ease;
+      }
+
+      .dropdown-content a {
+        color: var(--text-light);
+        padding: 0.875rem 1.25rem;
+        text-decoration: none;
+        display: block;
+        font-weight: 400;
+        transition: all var(--transition-fast);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      .dropdown-content a:last-child {
+        border-bottom: none;
+      }
+
+      .dropdown-content a:hover {
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--text-white);
+        padding-left: 1.5rem;
+      }
+
+      .dropdown:hover .dropdown-content {
+        display: block;
+      }
+
+      .auth-buttons {
+        display: flex;
+        gap: 1rem;
+      }
+
+      .btn {
+        padding: 0.75rem 1.75rem;
+        border-radius: var(--radius-md);
+        font-weight: 600;
+        cursor: pointer;
+        transition: all var(--transition-normal);
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        font-size: 1rem;
+        border: none;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .btn::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent
+        );
+        transition: left 0.5s;
+      }
+
+      .btn:hover::before {
+        left: 100%;
+      }
+
+      .btn-primary {
+        background: var(--gradient-primary);
+        color: white;
+        box-shadow: var(--shadow-primary);
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 28px rgba(79, 70, 229, 0.4);
+      }
+
+      .btn-outline {
+        background: transparent;
+        color: var(--text-light);
+        border: 2px solid rgba(148, 163, 184, 0.3);
+      }
+
+      .btn-outline:hover {
+        background: rgba(255, 255, 255, 0.05);
+        border-color: var(--primary-blue-light);
+        color: var(--text-white);
+        transform: translateY(-2px);
+      }
+
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        gap: 4px;
+        cursor: pointer;
+        padding: 0.5rem;
+      }
+
+      .hamburger span {
+        width: 25px;
+        height: 3px;
+        background: var(--text-white);
+        border-radius: 2px;
+        transition: all var(--transition-normal);
+      }
+
+      .hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(6px, 6px);
+      }
+
+      .hamburger.active span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(6px, -6px);
+      }
+
+      /* Hero Section */
+      .hero {
+        padding: 8rem 5% 6rem;
+        text-align: center;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .hero h1 {
+        font-size: 4rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        line-height: 1.1;
+        background: linear-gradient(
+          to right,
+          var(--text-white),
+          var(--secondary-blue)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .hero p {
+        font-size: 1.375rem;
+        color: var(--text-gray);
+        max-width: 700px;
+        margin: 0 auto 3rem;
+        font-weight: 400;
+      }
+
+      .hero-buttons {
+        display: flex;
+        gap: 1.25rem;
+        justify-content: center;
+        margin-bottom: 4rem;
+      }
+
+      .device-mockup {
+        position: relative;
+        max-width: 900px;
+        margin: 0 auto;
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        box-shadow: var(--shadow-lg);
+        transition: transform var(--transition-normal);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .device-mockup:hover {
+        transform: translateY(-8px);
+      }
+
+      .device-mockup img {
+        width: 100%;
+        display: block;
+        border-radius: var(--radius-md);
+      }
+
+      .play-button {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 90px;
+        height: 90px;
+        background: rgba(79, 70, 229, 0.9);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all var(--transition-normal);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(10px);
+      }
+
+      .play-button:hover {
+        background: var(--primary-blue);
+        transform: translate(-50%, -50%) scale(1.1);
+        box-shadow: 0 12px 32px rgba(79, 70, 229, 0.5);
+      }
+
+      .play-button i {
+        color: white;
+        font-size: 2.5rem;
+        margin-left: 4px;
+      }
+
+      /* Section Styles */
+      section {
+        padding: 6rem 5%;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .section-title {
+        text-align: center;
+        margin-bottom: 4rem;
+      }
+
+      .section-title h2 {
+        font-size: 3rem;
+        font-weight: 800;
+        margin-bottom: 1.25rem;
+        background: linear-gradient(
+          to right,
+          var(--text-white),
+          var(--secondary-blue)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .section-title p {
+        color: var(--text-gray);
+        max-width: 650px;
+        margin: 0 auto;
+        font-size: 1.25rem;
+      }
+
+      /* Games Section */
+      .games-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2.5rem;
+        margin-bottom: 4rem;
+      }
+
+      .game-card {
+        background: var(--card-bg);
+        backdrop-filter: blur(20px);
+        border-radius: var(--radius-lg);
+        padding: 2.5rem 2rem;
+        text-align: center;
+        box-shadow: var(--shadow-md);
+        border: 1px solid var(--card-border);
+        transition: all var(--transition-normal);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .game-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: var(--gradient-primary);
+      }
+
+      .game-card:hover {
+        transform: translateY(-10px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .game-card i {
+        font-size: 3.5rem;
+        margin-bottom: 1.75rem;
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .game-card h3 {
+        font-size: 1.75rem;
+        margin-bottom: 1rem;
+        color: var(--text-white);
+      }
+
+      .game-card p {
+        color: var(--text-gray);
+        margin-bottom: 2rem;
+        font-size: 1.125rem;
+      }
+
+      /* Gallery Section */
+      .gallery-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2.5rem;
+      }
+
+      .gallery-header h2 {
+        font-size: 2.5rem;
+        background: linear-gradient(
+          to right,
+          var(--text-white),
+          var(--secondary-blue)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .gallery-header a {
+        color: var(--primary-blue-light);
+        text-decoration: none;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: all var(--transition-fast);
+      }
+
+      .gallery-header a:hover {
+        color: var(--secondary-blue);
+        gap: 0.75rem;
+      }
+
+      .games-gallery {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1.75rem;
+      }
+
+      .game-tile {
+        position: relative;
+        border-radius: var(--radius-md);
+        overflow: hidden;
+        aspect-ratio: 1;
+        box-shadow: var(--shadow-md);
+        transition: all var(--transition-normal);
+        cursor: pointer;
+      }
+
+      .game-tile:hover {
+        transform: translateY(-8px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .game-tile img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform var(--transition-slow);
+      }
+
+      .game-tile:hover img {
+        transform: scale(1.1);
+      }
+
+      .game-tile-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+        padding: 1.5rem;
+        color: white;
+      }
+
+      .game-tile-overlay h3 {
+        font-size: 1.125rem;
+        margin-bottom: 0.375rem;
+      }
+
+      .game-tile-overlay p {
+        font-size: 0.875rem;
+        color: var(--text-gray);
+      }
+
+      .play-icon {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(79, 70, 229, 0.9);
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity var(--transition-normal);
+        backdrop-filter: blur(10px);
+      }
+
+      .game-tile:hover .play-icon {
+        opacity: 1;
+      }
+
+      .play-icon i {
+        color: white;
+        font-size: 1.25rem;
+        margin-left: 2px;
+      }
+
+      /* How It Works Section */
+      .steps-container {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        margin: 5rem 0;
+      }
+
+      .step-card {
+        background: var(--card-bg);
+        backdrop-filter: blur(20px);
+        border-radius: var(--radius-lg);
+        padding: 2.5rem 2rem;
+        width: 23%;
+        box-shadow: var(--shadow-md);
+        border: 1px solid var(--card-border);
+        position: relative;
+        z-index: 2;
+        transition: all var(--transition-normal);
+        text-align: center;
+      }
+
+      .step-card:hover {
+        transform: translateY(-8px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .step-number {
+        position: absolute;
+        top: -20px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 50px;
+        height: 50px;
+        background: var(--gradient-primary);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        font-size: 1.25rem;
+        box-shadow: var(--shadow-md);
+      }
+
+      .step-card i {
+        font-size: 3rem;
+        margin-bottom: 1.75rem;
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .step-card h3 {
+        margin-bottom: 1rem;
+        font-size: 1.5rem;
+        color: var(--text-white);
+      }
+
+      .step-card p {
+        color: var(--text-gray);
+        margin-bottom: 1.75rem;
+        font-size: 1.125rem;
+      }
+
+      .step-connector {
+        position: absolute;
+        top: 25px;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: var(--card-border);
+        z-index: 1;
+      }
+
+      /* FAQ Section */
+      .faq-container {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      .faq-item {
+        margin-bottom: 1.25rem;
+        border-radius: var(--radius-md);
+        overflow: hidden;
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        transition: all var(--transition-normal);
+      }
+
+      .faq-item:hover {
+        border-color: rgba(148, 163, 184, 0.2);
+      }
+
+      .faq-question {
+        padding: 1.75rem;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 600;
+        font-size: 1.125rem;
+        transition: all var(--transition-fast);
+      }
+
+      .faq-question:hover {
+        background: rgba(255, 255, 255, 0.02);
+      }
+
+      .faq-answer {
+        padding: 0 1.75rem 1.75rem;
+        color: var(--text-gray);
+        display: none;
+        font-size: 1.125rem;
+        line-height: 1.7;
+      }
+
+      .faq-question i {
+        transition: transform var(--transition-normal);
+        color: var(--primary-blue-light);
+      }
+
+      .faq-item.active .faq-question i {
+        transform: rotate(180deg);
+      }
+
+      /* About Section */
+      .about-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2.5rem;
+      }
+
+      .about-card {
+        background: var(--card-bg);
+        backdrop-filter: blur(20px);
+        border-radius: var(--radius-lg);
+        padding: 2.5rem 2rem;
+        text-align: center;
+        box-shadow: var(--shadow-md);
+        border: 1px solid var(--card-border);
+        transition: all var(--transition-normal);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .about-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+      }
+
+      .about-card:nth-child(1)::before {
+        background: linear-gradient(to right, #10b981, #34d399);
+      }
+
+      .about-card:nth-child(2)::before {
+        background: var(--gradient-primary);
+      }
+
+      .about-card:nth-child(3)::before {
+        background: linear-gradient(to right, #f59e0b, #fbbf24);
+      }
+
+      .about-card:hover {
+        transform: translateY(-8px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .about-card i {
+        font-size: 3rem;
+        margin-bottom: 1.75rem;
+      }
+
+      .about-card:nth-child(1) i {
+        color: #10b981;
+      }
+
+      .about-card:nth-child(2) i {
+        color: var(--primary-blue);
+      }
+
+      .about-card:nth-child(3) i {
+        color: #f59e0b;
+      }
+
+      .about-card h3 {
+        margin-bottom: 1.25rem;
+        font-size: 1.5rem;
+        color: var(--text-white);
+      }
+
+      .about-card p {
+        color: var(--text-gray);
+        font-size: 1.125rem;
+      }
+
+      /* Footer */
+      footer {
+        background: rgba(10, 14, 23, 0.98);
+        padding: 5rem 5% 2rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      .footer-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 3rem;
+        max-width: 1200px;
+        margin: 0 auto 4rem;
+      }
+
+      .footer-column h3 {
+        font-size: 1.375rem;
+        margin-bottom: 1.75rem;
+        color: var(--text-white);
+        font-weight: 700;
+      }
+
+      .footer-column ul {
+        list-style: none;
+      }
+
+      .footer-column ul li {
+        margin-bottom: 0.875rem;
+      }
+
+      .footer-column ul li a {
+        color: var(--text-gray);
+        text-decoration: none;
+        transition: color var(--transition-fast);
+        font-size: 1rem;
+      }
+
+      .footer-column ul li a:hover {
+        color: var(--primary-blue-light);
+      }
+
+      .newsletter-form {
+        display: flex;
+        margin-top: 1.25rem;
+        border-radius: var(--radius-md);
+        overflow: hidden;
+        border: 1px solid var(--card-border);
+      }
+
+      .newsletter-form input {
+        flex: 1;
+        padding: 0.875rem 1rem;
+        border: none;
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--text-white);
+        font-size: 1rem;
+      }
+
+      .newsletter-form input::placeholder {
+        color: var(--text-muted);
+      }
+
+      .newsletter-form button {
+        padding: 0 1.5rem;
+        background: var(--gradient-primary);
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: all var(--transition-fast);
+      }
+
+      .newsletter-form button:hover {
+        background: var(--primary-blue);
+      }
+
+      .social-icons {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1.75rem;
+      }
+
+      .social-icons a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        border-radius: var(--radius-md);
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--text-gray);
+        transition: all var(--transition-normal);
+      }
+
+      .social-icons a:hover {
+        background: var(--primary-blue);
+        color: white;
+        transform: translateY(-3px);
+      }
+
+      .footer-bottom {
+        text-align: center;
+        padding-top: 3rem;
+        border-top: 1px solid var(--card-border);
+        color: var(--text-muted);
+        font-size: 0.95rem;
+      }
+
+      .footer-bottom a {
+        color: var(--text-gray);
+        text-decoration: none;
+        margin: 0 0.75rem;
+        transition: color var(--transition-fast);
+      }
+
+      .footer-bottom a:hover {
+        color: var(--primary-blue-light);
+      }
+
+      /* Modal */
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.85);
+        z-index: 1000;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(5px);
+        animation: fadeIn 0.3s ease;
+      }
+
+      .modal-content {
+        position: relative;
+        width: 85%;
+        max-width: 1000px;
+        background: var(--bg-dark);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        box-shadow: var(--shadow-lg);
+        border: 1px solid var(--card-border);
+        animation: scaleIn 0.3s ease;
+      }
+
+      .modal-video {
+        width: 100%;
+        aspect-ratio: 16/9;
+      }
+
+      .close-modal {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: rgba(0, 0, 0, 0.6);
+        color: white;
+        border: none;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all var(--transition-fast);
+        z-index: 10;
+      }
+
+      .close-modal:hover {
+        background: rgba(0, 0, 0, 0.8);
+        transform: scale(1.1);
+      }
+
+      /* Responsive Styles */
+      @media (max-width: 1200px) {
+        h1 {
+          font-size: 3.25rem;
+        }
+
+        h2 {
+          font-size: 2.25rem;
+        }
+
+        .section-title h2 {
+          font-size: 2.5rem;
+        }
+
+        .hero h1 {
+          font-size: 3.5rem;
+        }
+      }
+
+      @media (max-width: 1024px) {
+        .games-grid,
+        .about-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .games-gallery {
+          grid-template-columns: repeat(3, 1fr);
+        }
+
+        .footer-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .steps-container {
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 3rem;
+        }
+
+        .step-card {
+          width: 45%;
+        }
+
+        .step-connector {
+          display: none;
+        }
+      }
+
+      @media (max-width: 768px) {
+        nav ul {
+          display: none;
+        }
+
+        .hamburger {
+          display: flex;
+        }
+
+        .hero h1 {
+          font-size: 2.75rem;
+        }
+
+        .hero p {
+          font-size: 1.25rem;
+        }
+
+        .hero-buttons {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .games-grid,
+        .games-gallery,
+        .about-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .step-card {
+          width: 100%;
+        }
+
+        .section-title h2 {
+          font-size: 2.25rem;
+        }
+
+        h2 {
+          font-size: 2rem;
+        }
+      }
+
+      @media (max-width: 576px) {
+        .hero h1 {
+          font-size: 2.25rem;
+        }
+
+        .hero p {
+          font-size: 1.125rem;
+        }
+
+        .games-grid,
+        .games-gallery,
+        .about-grid,
+        .footer-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .auth-buttons {
+          display: none;
+        }
+
+        .mobile-auth {
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+          margin-top: 2rem;
+        }
+
+        .section-title h2 {
+          font-size: 2rem;
+        }
+
+        h2 {
+          font-size: 1.75rem;
+        }
+
+        .gallery-header {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 1rem;
+        }
+      }
+
+      /* Mobile Menu */
+      .mobile-menu {
+        display: none;
+        position: fixed;
+        top: 70px;
+        left: 0;
+        right: 0;
+        background: var(--bg-light);
+        padding: 1.5rem 5%;
+        z-index: 99;
+        box-shadow: var(--shadow-lg);
+        backdrop-filter: blur(20px);
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        animation: slideDown 0.3s ease;
+      }
+
+      .mobile-menu.active {
+        display: block;
+      }
+
+      .mobile-menu ul {
+        list-style: none;
+      }
+
+      .mobile-menu ul li {
+        margin-bottom: 1.25rem;
+      }
+
+      .mobile-menu ul li a {
+        color: var(--text-white);
+        text-decoration: none;
+        font-weight: 500;
+        display: block;
+        padding: 0.75rem 0;
+        font-size: 1.125rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      .mobile-menu .dropdown-content {
+        position: static;
+        background: transparent;
+        box-shadow: none;
+        margin-top: 0;
+        display: none;
+        padding-left: 1rem;
+      }
+
+      .mobile-menu .dropdown.active .dropdown-content {
+        display: block;
+      }
+
+      /* Utility Classes */
+      .text-center {
+        text-align: center;
+      }
+
+      .mt-4 {
+        margin-top: 2rem;
+      }
+
+      /* Animations */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes scaleIn {
+        from {
+          opacity: 0;
+          transform: scale(0.9);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      @keyframes slideDown {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .animate-in {
+        animation: fadeIn 0.6s ease forwards;
+      }
+
+      /* Additional Improvements */
+      .gradient-text {
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .card-hover {
+        transition: all var(--transition-normal);
+      }
+
+      .card-hover:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .pulse {
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+        0% {
+          box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.4);
+        }
+        70% {
+          box-shadow: 0 0 0 10px rgba(79, 70, 229, 0);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(79, 70, 229, 0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Particles Background -->
+    <div id="particles-js"></div>
+
+    <!-- Header -->
+    <header id="header">
+      <div class="logo">
+        <i class="fas fa-gamepad"></i>
+        <span>Gaggle.fun</span>
+      </div>
+
+      <nav>
+        <ul>
+          <li><a href="#">Escape Rooms</a></li>
+          <li class="dropdown">
+            <a href="#">Games <i class="fas fa-chevron-down"></i></a>
+            <div class="dropdown-content">
+              <a href="#">Party Games</a>
+              <a href="#">Card Games</a>
+              <a href="#">Puzzle Games</a>
+              <a href="#">Trivia Games</a>
+            </div>
+          </li>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Blog</a></li>
+        </ul>
+      </nav>
+
+      <div class="auth-buttons">
+        <a href="#" class="btn btn-primary">Sign up</a>
+        <a href="#" class="btn btn-outline">Log in</a>
+      </div>
+
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobile-menu">
+      <ul>
+        <li><a href="#">Escape Rooms</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle"
+            >Games <i class="fas fa-chevron-down"></i
+          ></a>
+          <div class="dropdown-content">
+            <a href="#">Party Games</a>
+            <a href="#">Card Games</a>
+            <a href="#">Puzzle Games</a>
+            <a href="#">Trivia Games</a>
+          </div>
+        </li>
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#">Blog</a></li>
+      </ul>
+      <div class="mobile-auth">
+        <a href="#" class="btn btn-primary">Sign up</a>
+        <a href="#" class="btn btn-outline">Log in</a>
+      </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <h1>Social gaming to a whole new level!</h1>
+      <p>
+        Play exciting party games, escape rooms, and card games with friends
+        through voice and video chat - no matter where you are.
+      </p>
+      <div class="hero-buttons">
+        <a href="#" class="btn btn-primary pulse">Try for free</a>
+        <a href="#" class="btn btn-outline">Log in</a>
+      </div>
+      <div class="device-mockup">
+        <img
+          src="https://placehold.co/800x450/1e293b/60a5fa/png?text=Gaggle.fun+Gameplay"
+          alt="Gaggle.fun gameplay preview"
+        />
+        <div class="play-button" id="play-button">
+          <i class="fas fa-play"></i>
+        </div>
+      </div>
+    </section>
+
+    <!-- Our Games Section -->
+    <section>
+      <div class="section-title">
+        <h2>Our Games</h2>
+        <p>
+          Discover our collection of social games designed to bring people
+          together for unforgettable experiences.
+        </p>
+      </div>
+
+      <div class="games-grid">
+        <div class="game-card">
+          <i class="fas fa-lock"></i>
+          <h3>Online Escape Rooms</h3>
+          <p>
+            Work together with friends to solve puzzles and escape before time
+            runs out.
+          </p>
+          <a href="#" class="btn btn-outline">Explore</a>
+        </div>
+        <div class="game-card">
+          <i class="fas fa-users"></i>
+          <h3>Online Party Games</h3>
+          <p>
+            Fun and engaging games perfect for virtual parties and gatherings.
+          </p>
+          <a href="#" class="btn btn-outline">Explore</a>
+        </div>
+        <div class="game-card">
+          <i class="fas fa-cards"></i>
+          <h3>Online Card Games</h3>
+          <p>
+            Classic and new card games to play with friends from around the
+            world.
+          </p>
+          <a href="#" class="btn btn-outline">Explore</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section>
+      <div class="gallery-header">
+        <h2>All-time favourite games</h2>
+        <a href="#">Explore all <i class="fas fa-arrow-right"></i></a>
+      </div>
+
+      <div class="games-gallery">
+        <!-- Game 1 -->
+        <div class="game-tile">
+          <img
+            src="https://placehold.co/300x300/3b82f6/ffffff/png?text=Mystery+Mansion"
+            alt="Mystery Mansion"
+          />
+          <div class="game-tile-overlay">
+            <h3>Mystery Mansion</h3>
+            <p>Escape Room</p>
+          </div>
+          <div class="play-icon">
+            <i class="fas fa-play"></i>
+          </div>
+        </div>
+
+        <!-- Game 2 -->
+        <div class="game-tile">
+          <img
+            src="https://placehold.co/300x300/60a5fa/ffffff/png?text=Quiz+Showdown"
+            alt="Quiz Showdown"
+          />
+          <div class="game-tile-overlay">
+            <h3>Quiz Showdown</h3>
+            <p>Party Game</p>
+          </div>
+          <div class="play-icon">
+            <i class="fas fa-play"></i>
+          </div>
+        </div>
+
+        <!-- Game 3 -->
+        <div class="game-tile">
+          <img
+            src="https://placehold.co/300x300/1e293b/60a5fa/png?text=Virtual+Heist"
+            alt="Virtual Heist"
+          />
+          <div class="game-tile-overlay">
+            <h3>Virtual Heist</h3>
+            <p>Escape Room</p>
+          </div>
+          <div class="play-icon">
+            <i class="fas fa-play"></i>
+          </div>
+        </div>
+
+        <!-- Game 4 -->
+        <div class="game-tile">
+          <img
+            src="https://placehold.co/300x300/3b82f6/ffffff/png?text=Card+Clash"
+            alt="Card Clash"
+          />
+          <div class="game-tile-overlay">
+            <h3>Card Clash</h3>
+            <p>Card Game</p>
+          </div>
+          <div class="play-icon">
+            <i class="fas fa-play"></i>
+          </div>
+        </div>
+
+        <!-- Game 5 -->
+        <div class="game-tile">
+          <img
+            src="https://placehold.co/300x300/60a5fa/ffffff/png?text=Word+Wizards"
+            alt="Word Wizards"
+          />
+          <div class="game-tile-overlay">
+            <h3>Word Wizards</h3>
+            <p>Party Game</p>
+          </div>
+          <div class="play-icon">
+            <i class="fas fa-play"></i>
+          </div>
+        </div>
+
+        <!-- Game 6 -->
+        <div class="game-tile">
+          <img
+            src="https://placehold.co/300x300/1e293b/60a5fa/png?text=Space+Escape"
+            alt="Space Escape"
+          />
+          <div class="game-tile-overlay">
+            <h3>Space Escape</h3>
+            <p>Escape Room</p>
+          </div>
+          <div class="play-icon">
+            <i class="fas fa-play"></i>
+          </div>
+        </div>
+
+        <!-- Game 7 -->
+        <div class="game-tile">
+          <img
+            src="https://placehold.co/300x300/3b82f6/ffffff/png?text=Poker+Night"
+            alt="Poker Night"
+          />
+          <div class="game-tile-overlay">
+            <h3>Poker Night</h3>
+            <p>Card Game</p>
+          </div>
+          <div class="play-icon">
+            <i class="fas fa-play"></i>
+          </div>
+        </div>
+
+        <!-- Game 8 -->
+        <div class="game-tile">
+          <img
+            src="https://placehold.co/300x300/60a5fa/ffffff/png?text=Charade+Challenge"
+            alt="Charade Challenge"
+          />
+          <div class="game-tile-overlay">
+            <h3>Charade Challenge</h3>
+            <p>Party Game</p>
+          </div>
+          <div class="play-icon">
+            <i class="fas fa-play"></i>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section>
+      <div class="section-title">
+        <h2>How it works</h2>
+        <p>Just 4 steps to play and have fun with your friends</p>
+      </div>
+
+      <div class="steps-container">
+        <div class="step-connector"></div>
+
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <i class="fas fa-user-plus"></i>
+          <h3>Create your account</h3>
+          <p>Sign up in seconds with your email or social accounts.</p>
+          <a href="#" class="btn btn-outline">Sign up</a>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <i class="fas fa-key"></i>
+          <h3>Purchase game keys</h3>
+          <p>Get access to our escape rooms and premium party games.</p>
+          <a href="#" class="btn btn-outline">Get keys</a>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <i class="fas fa-user-friends"></i>
+          <h3>Invite your friends</h3>
+          <p>Share your game room link or invite friends directly.</p>
+          <a href="#" class="btn btn-outline">Invite</a>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">4</div>
+          <i class="fas fa-download"></i>
+          <h3>Download the game</h3>
+          <p>Get our app for the best experience on your device.</p>
+          <a href="#" class="btn btn-outline">Download</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section>
+      <div class="section-title">
+        <h2>Frequently Asked Questions</h2>
+        <p>Find answers to common questions about Gaggle.fun</p>
+      </div>
+
+      <div class="faq-container">
+        <!-- FAQ Item 1 -->
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>What do I need to play?</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>
+              To play games on Gaggle.fun, you'll need a stable internet
+              connection, a device (computer, tablet, or smartphone), and a web
+              browser. Some games may require our desktop app for the best
+              experience. For voice/video chat, a microphone (and optionally a
+              webcam) is recommended.
+            </p>
+          </div>
+        </div>
+
+        <!-- FAQ Item 2 -->
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>Can I play on my phone or tablet?</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>
+              Yes! Most of our games are responsive and work on mobile devices.
+              We have dedicated apps for iOS and Android for an optimized mobile
+              experience. Some complex escape rooms might be better enjoyed on a
+              computer with a larger screen.
+            </p>
+          </div>
+        </div>
+
+        <!-- FAQ Item 3 -->
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>Do all my friends need to buy a game key to play?</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>
+              It depends on the game. For free games, no purchase is needed. For
+              premium escape rooms and party games, typically only the host
+              needs to purchase a game key, which allows them to invite friends
+              to play together. Some premium games may require each player to
+              have their own key.
+            </p>
+          </div>
+        </div>
+
+        <!-- FAQ Item 4 -->
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>What is online escape rooms?</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>
+              Our online escape rooms are virtual adventures where you and your
+              friends work together to solve puzzles, find clues, and complete
+              challenges to "escape" within a time limit. They feature immersive
+              storylines, interactive elements, and teamwork challenges - all
+              from the comfort of your home.
+            </p>
+          </div>
+        </div>
+
+        <!-- FAQ Item 5 -->
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>How do voice/video rooms work?</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>
+              Our voice/video chat rooms are integrated directly into the gaming
+              experience. When you create or join a game, you'll automatically
+              be connected to the voice chat. You can enable video if you prefer
+              face-to-face interaction. Our technology ensures clear
+              communication with minimal lag, and you can adjust settings or
+              mute yourself at any time.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center mt-4">
+        <a href="#" class="btn btn-primary">Try for free</a>
+        <a href="#" class="btn btn-outline">Log in</a>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section>
+      <div class="section-title">
+        <h2>What is Gaggle.fun?</h2>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-card">
+          <i class="fas fa-rocket"></i>
+          <h3>Who are we?</h3>
+          <p>
+            Gaggle.fun is created by a team of game enthusiasts and technology
+            experts who believe in the power of play to bring people together.
+            Based in San Francisco, our diverse team includes game designers,
+            software engineers, and community managers.
+          </p>
+        </div>
+
+        <div class="about-card">
+          <i class="fas fa-lightbulb"></i>
+          <h3>Why did we create Gaggle.fun?</h3>
+          <p>
+            We started Gaggle.fun to solve a simple problem: it's hard to have
+            fun with friends when you're apart. We wanted to create a platform
+            where distance doesn't matter - where you can laugh, play, and make
+            memories together no matter where you are in the world.
+          </p>
+        </div>
+
+        <div class="about-card">
+          <i class="fas fa-star"></i>
+          <h3>What makes us special?</h3>
+          <p>
+            Unlike other gaming platforms, we focus specifically on social
+            experiences. Our games are designed from the ground up to encourage
+            interaction, teamwork, and laughter. We combine high-quality game
+            design with seamless voice/video integration for a truly social
+            experience.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-grid">
+        <div class="footer-column">
+          <h3>Gaggle</h3>
+          <p>
+            Social gaming platform designed to bring friends together through
+            fun and engaging experiences.
+          </p>
+          <p>123 Game Street, San Francisco, CA 94110</p>
+        </div>
+
+        <div class="footer-column">
+          <h3>Games</h3>
+          <ul>
+            <li><a href="#">Escape rooms</a></li>
+            <li><a href="#">Party games</a></li>
+            <li><a href="#">Card games</a></li>
+            <li><a href="#">All games</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h3>Company</h3>
+          <ul>
+            <li><a href="#">About us</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Press</a></li>
+            <li><a href="#">Terms & conditions</a></li>
+            <li><a href="#">Privacy policy</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h3>Resources</h3>
+          <ul>
+            <li><a href="#">Support</a></li>
+            <li><a href="#">Help center</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+
+          <h3>Newsletter</h3>
+          <p>Subscribe to get updates on new games and features.</p>
+          <div class="newsletter-form">
+            <input type="email" placeholder="Your email" />
+            <button type="submit"><i class="fas fa-paper-plane"></i></button>
+          </div>
+
+          <div class="social-icons">
+            <a href="#"><i class="fab fa-discord"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2023 Gaggle Studios, Inc. All rights reserved.</p>
+        <p>
+          <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a> |
+          <a href="#">Cookie Policy</a>
+        </p>
+      </div>
+    </footer>
+
+    <!-- Video Modal -->
+    <div class="modal" id="video-modal">
+      <div class="modal-content">
+        <button class="close-modal" id="close-modal">&times;</button>
+        <iframe
+          class="modal-video"
+          src="about:blank"
+          data-src="https://www.youtube.com/embed/jNQXAC9IVRw?autoplay=1"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </div>
+
+    <script>
+      // Wait for DOM to be fully loaded
+      document.addEventListener("DOMContentLoaded", function () {
+        // Header scroll effect
+        const header = document.getElementById("header");
+        window.addEventListener("scroll", () => {
+          if (window.scrollY > 50) {
+            header.classList.add("scrolled");
+          } else {
+            header.classList.remove("scrolled");
+          }
+        });
+
+        // Mobile menu toggle
+        const hamburger = document.getElementById("hamburger");
+        const mobileMenu = document.getElementById("mobile-menu");
+
+        hamburger.addEventListener("click", () => {
+          mobileMenu.classList.toggle("active");
+          hamburger.classList.toggle("active");
+        });
+
+        // FAQ accordion
+        const faqItems = document.querySelectorAll(".faq-item");
+
+        faqItems.forEach((item) => {
+          const question = item.querySelector(".faq-question");
+
+          question.addEventListener("click", () => {
+            const isActive = item.classList.contains("active");
+
+            // Close all items
+            faqItems.forEach((faqItem) => {
+              faqItem.classList.remove("active");
+              faqItem.querySelector(".faq-answer").style.display = "none";
+            });
+
+            // Open clicked item if it wasn't active
+            if (!isActive) {
+              item.classList.add("active");
+              item.querySelector(".faq-answer").style.display = "block";
+            }
+          });
+        });
+
+        // Video modal
+        const playButton = document.getElementById("play-button");
+        const videoModal = document.getElementById("video-modal");
+        const closeModal = document.getElementById("close-modal");
+        const videoIframe = document.querySelector(".modal-video");
+
+        playButton.addEventListener("click", () => {
+          videoModal.style.display = "flex";
+          // Set the src only when opening to avoid loading video on page load
+          videoIframe.src = videoIframe.dataset.src;
+        });
+
+        closeModal.addEventListener("click", () => {
+          videoModal.style.display = "none";
+          videoIframe.src = "about:blank"; // Stop video when closing
+        });
+
+        // Close modal when clicking outside
+        videoModal.addEventListener("click", (e) => {
+          if (e.target === videoModal) {
+            videoModal.style.display = "none";
+            videoIframe.src = "about:blank"; // Stop video when closing
+          }
+        });
+
+        // Close modal with ESC key
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape" && videoModal.style.display === "flex") {
+            videoModal.style.display = "none";
+            videoIframe.src = "about:blank"; // Stop video when closing
+          }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+          anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+
+            const targetId = this.getAttribute("href");
+            if (targetId === "#") return;
+
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+              window.scrollTo({
+                top: targetElement.offsetTop - 80,
+                behavior: "smooth",
+              });
+            }
+          });
+        });
+
+        // Mobile dropdowns
+        const mobileDropdownToggles = document.querySelectorAll(
+          ".mobile-menu .dropdown-toggle"
+        );
+
+        mobileDropdownToggles.forEach((toggle) => {
+          toggle.addEventListener("click", (e) => {
+            e.preventDefault();
+            const dropdown = toggle.parentElement;
+            dropdown.classList.toggle("active");
+          });
+        });
+      });
+    </script>
+
+    <!-- Particles.js for background effect -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        particlesJS("particles-js", {
+          particles: {
+            number: {
+              value: 100,
+              density: {
+                enable: true,
+                value_area: 800,
+              },
+            },
+            color: {
+              value: "#4f46e5",
+            },
+            shape: {
+              type: "circle",
+              stroke: {
+                width: 0,
+                color: "#000000",
+              },
+            },
+            opacity: {
+              value: 0.5,
+              random: true,
+              anim: {
+                enable: true,
+                speed: 1,
+                opacity_min: 0.1,
+                sync: false,
+              },
+            },
+            size: {
+              value: 3,
+              random: true,
+              anim: {
+                enable: true,
+                speed: 2,
+                size_min: 0.1,
+                sync: false,
+              },
+            },
+            line_linked: {
+              enable: false,
+            },
+            move: {
+              enable: true,
+              speed: 1,
+              direction: "none",
+              random: true,
+              straight: false,
+              out_mode: "out",
+              bounce: false,
+              attract: {
+                enable: false,
+                rotateX: 600,
+                rotateY: 1200,
+              },
+            },
+          },
+          interactivity: {
+            detect_on: "canvas",
+            events: {
+              onhover: {
+                enable: true,
+                mode: "bubble",
+              },
+              onclick: {
+                enable: true,
+                mode: "push",
+              },
+              resize: true,
+            },
+            modes: {
+              bubble: {
+                distance: 250,
+                size: 5,
+                duration: 2,
+                opacity: 0.4,
+                speed: 3,
+              },
+              push: {
+                particles_nb: 4,
+              },
+            },
+          },
+          retina_detect: true,
+        });
+      });
+    </script>
+  </body>
+</html>
